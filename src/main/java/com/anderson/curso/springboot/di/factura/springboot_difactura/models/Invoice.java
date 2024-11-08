@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -11,12 +14,14 @@ import jakarta.annotation.PreDestroy;
 import java.util.List;
 
 @Component
+@RequestScope
+@JsonIgnoreProperties({ "targetSource", "advisors" })
 public class Invoice {
 
     @Autowired
     private Client client;
 
-    @Value("${invoice.descripcion.office}")
+    @Value("${invoice.descripcion}")
     private String descripcion;
 
     // @Qualifier("${invoice.descripcion.office}")
@@ -40,7 +45,7 @@ public class Invoice {
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         System.out.println("Destruyendo en componente beans");
     }
 

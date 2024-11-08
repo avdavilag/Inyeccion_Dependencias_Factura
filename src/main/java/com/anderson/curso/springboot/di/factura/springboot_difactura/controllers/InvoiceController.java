@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anderson.curso.springboot.di.factura.springboot_difactura.models.Client;
 import com.anderson.curso.springboot.di.factura.springboot_difactura.models.Invoice;
 
 @RestController
@@ -16,6 +17,13 @@ public class InvoiceController {
 
     @GetMapping("/show")
     public Invoice show() {
+        Invoice i = new Invoice();
+        Client c =new Client();
+        c.setLastname(invoice.getClient().getLastname());
+        c.setName(invoice.getClient().getName());
+        i.setClient(c);
+        i.setDescripcion(invoice.getDescripcion());
+        i.setItems(invoice.getItems());
         return invoice;
     }
 
